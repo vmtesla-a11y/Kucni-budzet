@@ -1,5 +1,7 @@
 import { expenseProgress, plannedRemaining, sumByKind, transactionsInMonth } from './calc';
 import { defaultDateForMonth, formatMonth, isValidDate, monthRange, shiftMonth } from './dates';
+import { transactionDraft } from './draft';
+import { BudgetError } from './errors';
 import { mergeCategories } from './defaults';
 import { formatMoney, parseMoney } from './money';
 import { Category, Transaction } from './types';
@@ -65,6 +67,32 @@ check('sums only the selected month', () => {
   deepEqual(plannedRemaining(progress), { limit: 1000, spent: 400, remaining: 600 });
 });
 
+check('builds a transaction draft from the form', () => {
+  const draft = transactionDraft({
+    kind: 'expense',
+    amountText: '1.500,50',
+    categoryId: 'exp-hrana',
+    note: '  pijaca ',
+    date: '2026-10-06',
+  });
+  equal(draft.amount, 1500.5);
+  equal(draft.note, 'pijaca');
+  equal(draft.categoryId, 'exp-hrana');
+  assertError(
+    () =>
+      transactionDraft({
+        kind: 'expense',
+        amountText: '0',
+        categoryId: 'exp-hrana',
+        note: '',
+        date: '2026-10-06',
+      }),
+    'Unesi iznos veći od nule. Primer: 1500 ili 1.500,50.',
+  );
+  assertError(() => transactionDraft({ kind: 'expense', amountText: '10', categoryId: '', note: '', date: '2026-10-06' }), 'Izaberi kategoriju.');
+  assertError(() => transactionDraft({ kind: 'expense', amountText: '10', categoryId: 'exp-hrana', note: '', date: '2026-02-31' }), 'Datum treba da bude u obliku GGGG-MM-DD.');
+});
+
 check('keeps edited default limits and unknown categories', () => {
   const merged = mergeCategories([
     { id: 'exp-hrana', name: 'Hrana', kind: 'expense', monthlyLimit: 123 },
@@ -85,6 +113,18 @@ function match(actual: string, pattern: RegExp) {
   if (!pattern.test(actual)) {
     throw new Error(`${actual} does not match ${pattern}`);
   }
+}
+
+function assertError(run: () => unknown, message: string) {
+  try {
+    run();
+  } catch (error) {
+    if (error instanceof BudgetError && error.message === message) {
+      return;
+    }
+    throw error;
+  }
+  throw new Error(`expected error: ${message}`);
 }
 
 function deepEqual(actual: unknown, expected: unknown) {

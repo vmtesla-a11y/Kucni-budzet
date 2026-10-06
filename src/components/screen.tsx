@@ -10,12 +10,22 @@ export function Screen({
   children,
   title,
   subtitle,
+  chrome = 'tabs',
 }: {
   children: ReactNode;
-  title: string;
+  title?: string;
   subtitle?: string;
+  chrome?: 'tabs' | 'stack';
 }) {
   const insets = useSafeAreaInsets();
+  const paddingTop =
+    chrome === 'stack' ? Spacing.three : Platform.OS === 'web' ? 120 : insets.top + Spacing.three;
+  const paddingBottom =
+    chrome === 'stack'
+      ? insets.bottom + Spacing.four
+      : Platform.OS === 'web'
+        ? Spacing.five
+        : insets.bottom + BottomTabInset + Spacing.four;
 
   return (
     <ThemedView style={styles.fill}>
@@ -24,14 +34,11 @@ export function Screen({
         contentContainerStyle={[
           styles.content,
           {
-            paddingTop: Platform.OS === 'web' ? 120 : insets.top + Spacing.three,
-            paddingBottom:
-              Platform.OS === 'web'
-                ? Spacing.five
-                : insets.bottom + BottomTabInset + Spacing.four,
+            paddingTop,
+            paddingBottom,
           },
         ]}>
-        <ThemedText type="subtitle">{title}</ThemedText>
+        {title ? <ThemedText type="subtitle">{title}</ThemedText> : null}
         {subtitle ? (
           <ThemedText type="small" themeColor="textSecondary">
             {subtitle}

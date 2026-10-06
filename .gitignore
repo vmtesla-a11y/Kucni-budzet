@@ -8,6 +8,7 @@ node_modules/
 dist/
 web-build/
 expo-env.d.ts
+public/sql-wasm.wasm
 
 # Native
 .kotlin/
