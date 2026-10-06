@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 
 import AppTabs from '@/components/app-tabs';
-import { BudgetProvider } from '@/domain/budget-context';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,9 +16,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <BudgetProvider>
-        <AppTabs />
-      </BudgetProvider>
+      <AppTabs />
     </ThemeProvider>
   );
 }

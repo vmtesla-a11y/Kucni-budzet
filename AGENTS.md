@@ -2,7 +2,9 @@ This is Kućni budžet, an Expo/React Native household budget app. Prioritize mo
 
 ## Product
 
-Routes live in `src/app/`: `index` (Početna), `transactions` (Unosi), and `budget` (Plan). Domain math, dates, and money parsing live in `src/domain/` and stay free of React Native imports so `npm test` can run them with `tsx`.
+Routes live in `src/app/`: `index` (Početna, `/`), `transactions` (Unosi, `/transactions`), and `budget` (Plan, `/budget`). `src/app/_layout.tsx` mounts the tab router in `src/components/app-tabs.tsx` (web variant: `app-tabs.web.tsx`). Shared screen chrome is `src/components/screen.tsx`.
+
+Domain math, dates, and money parsing live in `src/domain/` and stay free of React Native imports so `npm test` can run them with `tsx`. The three tabs are shells until those screens are filled in.
 
 Currency is RSD. Amounts accept `1500,50` and `1,500.50`. A separator followed by exactly three digits is a thousands separator (`1.500` = 1500).
 
