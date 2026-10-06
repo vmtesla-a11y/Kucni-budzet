@@ -1,5 +1,5 @@
 import { expenseProgress, plannedRemaining, sumByKind, transactionsInMonth } from './calc';
-import { defaultDateForMonth, formatMonth, isValidDate, shiftMonth } from './dates';
+import { defaultDateForMonth, formatMonth, isValidDate, monthRange, shiftMonth } from './dates';
 import { mergeCategories } from './defaults';
 import { formatMoney, parseMoney } from './money';
 import { Category, Transaction } from './types';
@@ -40,6 +40,9 @@ check('moves across year boundaries', () => {
   equal(isValidDate('2026-10-05'), true);
   equal(defaultDateForMonth('2026-09', new Date(2026, 9, 5)), '2026-09-01');
   equal(defaultDateForMonth('2026-10', new Date(2026, 9, 5)), '2026-10-05');
+  equal(monthRange('2026-10').start, '2026-10-01');
+  equal(monthRange('2026-10').end, '2026-11-01');
+  equal(monthRange('2026-12').end, '2027-01-01');
 });
 
 check('sums only the selected month', () => {

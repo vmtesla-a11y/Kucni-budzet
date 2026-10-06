@@ -6,9 +6,11 @@ Routes live in `src/app/`: `index` (Početna, `/`), `transactions` (Unosi, `/tra
 
 Domain math, dates, and money parsing live in `src/domain/` and stay free of React Native imports so `npm test` can run them with `tsx`. The three tabs are shells until those screens are filled in.
 
-Currency is RSD. Amounts accept `1500,50` and `1,500.50`. A separator followed by exactly three digits is a thousands separator (`1.500` = 1500).
+The database is SQLite. `src/domain/schema.ts` is the schema, `src/domain/budget-db.ts` is the store API, and `src/domain/expo-database.ts` opens `kucni-budzet.db` on the device. Tests run the same SQL against `node:sqlite` in memory. Do not persist the budget as a JSON blob.
 
-Entries persist on the device with `@react-native-async-storage/async-storage`. This version has no account and no server.
+Currency is RSD. Amounts are stored as integer para (1 dinar = 100 para). Parsing accepts `1500,50` and `1,500.50`. A separator followed by exactly three digits is a thousands separator (`1.500` = 1500).
+
+This version has no account and no server.
 
 ## Expo has changed — do not trust your training data
 

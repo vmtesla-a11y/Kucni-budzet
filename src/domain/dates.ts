@@ -24,6 +24,25 @@ export function todayISO(now = new Date()): string {
   return `${currentMonth(now)}-${day}`;
 }
 
+export function monthRange(month: string): { start: string; end: string } {
+  if (!/^\d{4}-\d{2}$/.test(month)) {
+    return invalidMonth(month);
+  }
+  const [year, monthIndex] = month.split('-').map(Number);
+  if (monthIndex < 1 || monthIndex > 12) {
+    return invalidMonth(month);
+  }
+  const end =
+    monthIndex === 12
+      ? `${year + 1}-01-01`
+      : `${year}-${String(monthIndex + 1).padStart(2, '0')}-01`;
+  return { start: `${month}-01`, end };
+}
+
+function invalidMonth(month: string): never {
+  throw new Error(`Mesec treba da bude u obliku GGGG-MM, dobijeno: ${month}`);
+}
+
 export function shiftMonth(month: string, delta: number): string {
   const [year, monthIndex] = month.split('-').map(Number);
   return currentMonth(new Date(year, monthIndex - 1 + delta, 1));

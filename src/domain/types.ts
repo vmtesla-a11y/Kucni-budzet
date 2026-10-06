@@ -16,7 +16,4 @@ export type Transaction = {
   date: string;
 };
 
-export type PersistedBudget = {
-  categories: Category[];
-  transactions: Transaction[];
-};
+export type NewTransaction = Omit<Transaction, 'id'>;

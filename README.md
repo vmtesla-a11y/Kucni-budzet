@@ -12,4 +12,4 @@ npm run web
 
 `npm start` otvara Expo dev server. Na telefonu aplikaciju otvori kroz Expo Go.
 
-Unosi se čuvaju na uređaju. Nema naloga ni servera.
+Unosi se čuvaju u SQLite bazi na uređaju. Nema naloga ni servera. Ekrani su još prazne školjke; pravila su u `src/domain` i proveravaju se sa `npm test`.
