@@ -4,7 +4,7 @@ This is Kućni budžet, an Expo/React Native household budget app. Prioritize mo
 
 Routes live in `src/app/(tabs)/`: `index` (Početna, `/`), `transactions` (Unosi, `/transactions`), and `budget` (Plan, `/budget`). `src/app/add.tsx` is the entry form at `/add` and is not a tab. `src/app/_layout.tsx` is a stack. The tab router is `src/components/app-tabs.tsx` (web variant: `app-tabs.web.tsx`). Shared screen chrome is `src/components/screen.tsx`.
 
-Domain math, dates, and money parsing live in `src/domain/` and stay free of React Native imports so `npm test` can run them with `tsx`. Unosi lists the current month and opens `/add`. Početna and Plan are still shells.
+Domain math, dates, and money parsing live in `src/domain/` and stay free of React Native imports so `npm test` can run them with `tsx`. Početna shows `monthSummary` for the selected month. Unosi lists the current month and opens `/add`. Plan is still a shell.
 
 The database is SQLite. `src/domain/schema.ts` is the schema and `src/domain/budget-db.ts` is the store API. Tests run that SQL against `node:sqlite` in memory. On a phone, `src/domain/expo-database.ts` opens `kucni-budzet.db` with `expo-sqlite`. In the browser, `src/domain/expo-database.web.ts` runs the same SQL with `sql.js` and stores the file in `localStorage`. Do not persist the budget as a JSON blob.
 

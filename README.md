@@ -12,4 +12,4 @@ npm run web
 
 `npm start` otvara Expo dev server. Na telefonu aplikaciju otvori kroz Expo Go.
 
-Unosi se čuvaju u SQLite bazi na uređaju. Nema naloga ni servera. Ekran Unosi otvara formu Novi unos (`/add`). Početna i Plan su još prazne školjke. Pravila su u `src/domain` i proveravaju se sa `npm test`.
+Unosi se čuvaju u SQLite bazi na uređaju. Nema naloga ni servera. Početna prikazuje saldo, prihod, rashod i ostatak plana za izabrani mesec. Ekran Unosi otvara formu Novi unos (`/add`). Plan je još prazna školjka. Pravila su u `src/domain` i proveravaju se sa `npm test`.
